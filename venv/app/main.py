@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from . import models
@@ -20,9 +21,18 @@ from PIL import Image
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+origins = ["*"]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 
-app.mount("/static", StaticFiles(directory="app\static"),name="static")
+)
+
+#app.mount("/static", StaticFiles(directory="./app/static"),name="static")
 
 
 
