@@ -7,13 +7,8 @@ from .database import engine
 from .routers import users,like,products
 import time
 from . import utils
-
-
-#image upload
-from fastapi import File, UploadFile
-import secrets
 from fastapi.staticfiles import StaticFiles
-from PIL import Image 
+import os
 
 
 
@@ -31,10 +26,10 @@ app.add_middleware(
     allow_headers=["*"]
 
 )
-
-#app.mount("/static", StaticFiles(directory="./app/static"),name="static")
-
-
+import os
+script_dir = os.path.dirname(__file__)
+st_abs_file_path = os.path.join(script_dir, "static/")
+app.mount("/static", StaticFiles(directory=st_abs_file_path), name="static")
 
 
 
